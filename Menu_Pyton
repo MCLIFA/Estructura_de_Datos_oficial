@@ -1,0 +1,53 @@
+import sys
+
+def factorial(n):
+    if n == 0 or n == 1:
+        return 1
+    else:
+        return n * factorial(n - 1)
+
+def suma_digitos(n):
+    n = abs(n)
+    if n < 10:
+        return n
+    else:
+        return (n % 10) + suma_digitos(n // 10)
+
+def fibonacci(n):
+    if n <= 1:
+        return n
+    else:
+        return fibonacci(n - 1) + fibonacci(n - 2)
+
+def menu():
+    while True:
+        print("\n--- TAREA: FUNCIONES RECURSIVAS ---")
+        print("1. Factorial")
+        print("2. Suma de dígitos (Propio)")
+        print("3. Fibonacci (Compañero)")
+        print("0. Salir")
+        
+        opcion = input("\nSeleccione una opción: ")
+
+        if opcion == "1":
+            num = int(input("Ingrese un número entero: "))
+            print(f"Resultado: {factorial(num)}")
+        
+        elif opcion == "2":
+            num = int(input("Ingrese un número entero: "))
+            print(f"Resultado: {suma_digitos(num)}")
+        
+        elif opcion == "3":
+            num = int(input("Ingrese la posición en la serie: "))
+            print(f"Resultado: {fibonacci(num)}")
+            
+        elif opcion == "0":
+            print("Saliendo...")
+            break
+        
+        else:
+            print("Opción no válida.")
+
+if __name__ == "__main__":
+    sys.setrecursionlimit(2000)
+    menu()
