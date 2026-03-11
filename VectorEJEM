@@ -1,0 +1,65 @@
+#include <iostream>
+#include <conio.h>
+#include "vector.h"
+
+#define MAX 10
+
+using namespace std;
+
+void main() {
+	int vec[MAX * 2], vec2[MAX], n, m, op; // vec tiene espacio doble para el resultado
+	vector vector1; 
+
+	do {
+		cout << "Ingrese el tamanio del vector principal: ";
+		cin >> n;
+	} while ((n > MAX) || (n <= 0));
+
+	do {
+		cout << "\n-----       M E N U        -----" << endl;
+		cout << "|1.- Cargar Vector.            |" << endl;
+		cout << "|2.- Mostrar Vector.           |" << endl;
+		cout << "|3.- Ordenar Vector.           |" << endl;
+		cout << "|4.- Concatenar Vectores.      |" << endl;
+		cout << "|0.- Salir                     |" << endl;
+		cout << "--------------------------------" << endl;
+		cout << " Elija una opcion: ";
+		cin >> op;
+
+		switch (op) {
+		case 1:
+			vector1.cargarVector(vec, n);
+			break;
+		case 2:
+			cout << "Contenido del vector:" << endl;
+			vector1.mostrarVector(vec, n);
+			break;
+		case 3:
+			vector1.ordenarVector(vec, n);
+			cout << "Vector ordenado exitosamente." << endl;
+			break;
+		case 4:
+			cout << "Ingrese tamanio del segundo vector (m): ";
+			cin >> m;
+			cout << "Cargando datos del segundo vector..." << endl;
+			vector1.cargarVector(vec2, m);
+			
+			// Usamos el mismo array 'vec' para guardar el resultado o uno nuevo
+			int resultado[20]; 
+			vector1.concatenarVector(vec, n, vec2, m, resultado);
+			
+			cout << "Vector concatenado resultante:" << endl;
+			vector1.mostrarVector(resultado, n + m);
+			break;
+		case 0:
+			cout << "Saliendo del programa..." << endl;
+			break;
+		default:
+			cout << "Error: Opcion no valida..." << endl;
+			break;
+		}
+	} while (op != 0);
+
+	cout << "\nPresione una tecla para cerrar.";
+	_getch();
+}
