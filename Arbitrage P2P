@@ -1,0 +1,70 @@
+import tkinter as tk
+from tkinter import messagebox
+
+class CalculadoraEscenarioB:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Pagos Exactos - Soles")
+        self.root.geometry("400x450")
+        
+        # UI
+        tk.Label(root, text="Calculadora: Recibir Soles Exactos", font=("Arial", 14, "bold")).pack(pady=10)
+        
+        # Campo Monto Deseado en Soles
+        tk.Label(root, text="¿Cuántos Soles debe recibir el destinatario?").pack()
+        self.entry_soles = tk.Entry(root, font=("Arial", 12), justify="center")
+        self.entry_soles.pack(pady=5)
+
+        # Tasas
+        tk.Label(root, text="Precio Venta USDT en Soles (Ej: 3.75)").pack()
+        self.entry_tasa_sol = tk.Entry(root, font=("Arial", 12), justify="center")
+        self.entry_tasa_sol.pack(pady=5)
+
+        tk.Label(root, text="Precio Compra USDT en Bs (Ej: 10.50)").pack()
+        self.entry_tasa_bs = tk.Entry(root, font=("Arial", 12), justify="center")
+        self.entry_tasa_bs.pack(pady=5)
+
+        # Botón Calcular
+        tk.Button(root, text="CALCULAR DEPÓSITO EN BS", bg="#007bff", fg="white", 
+                  font=("Arial", 11, "bold"), command=self.calcular).pack(pady=20)
+
+        # Resultados
+        self.res_var = tk.StringVar(value="Ingrese los datos para calcular")
+        tk.Label(root, textvariable=self.res_var, font=("Arial", 12), 
+                 bg="#f8f9fa", height=6, width=35, relief="solid").pack(pady=10)
+
+    def calcular(self):
+        try:
+            soles_deseados = float(self.entry_soles.get())
+            tasa_sol = float(self.entry_tasa_sol.get())
+            tasa_bs = float(self.entry_tasa_bs.get())
+            comision_pct = 0.02 # 2%
+
+            # 1. ¿Cuántos USDT equivalen a esos Soles?
+            usdt_puros = soles_deseados / tasa_sol
+            
+            # 2. ¿Cuántos USDT adicionales son por el 2% de comisión?
+            comision_usdt = usdt_puros * comision_pct
+            
+            # 3. Total USDT que el cliente debe cubrir
+            total_usdt = usdt_puros + comision_usdt
+            
+            # 4. ¿A cuánto equivale eso en Bolivianos?
+            total_bs = total_usdt * tasa_bs
+
+            self.res_var.set(
+                f"PARA RECIBIR: S/ {soles_deseados:,.2f}\n"
+                f"---------------------------\n"
+                f"Monto en USDT: {usdt_puros:.2f}\n"
+                f"Comisión (2%): {comision_usdt:.2f} USDT\n"
+                f"---------------------------\n"
+                f"CLIENTE DEBE DEPOSITAR:\n"
+                f"Bs {total_bs:,.2f}"
+            )
+        except ValueError:
+            messagebox.showerror("Error", "Por favor ingrese números válidos (use punto para decimales)")
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = CalculadoraEscenarioB(root)
+    root.mainloop()
