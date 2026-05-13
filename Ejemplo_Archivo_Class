@@ -1,0 +1,50 @@
+#include <iostream>
+#include <conio.h>
+#include "ABMamigo.h"
+
+using namespace std;
+
+int main() {
+    // Creamos la instancia de la gestión, pasando el nombre del archivo donde se guardará todo
+    ABMamigo* gestion = new ABMamigo("amigos.dat");
+
+    int opcion;
+    do {
+        system("cls"); // Limpia la pantalla (solo Windows)
+        cout << "--- MENU DE AMIGOS ---" << endl;
+        cout << "1. Adicionar Nuevo" << endl;
+        cout << "2. Listar Amigos" << endl;
+        cout << "3. Buscar Registro" << endl;
+        cout << "4. Eliminar Registro" << endl;
+        cout << "5. Modificar Registro" << endl;
+        cout << "0. Salir" << endl;
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1:
+            gestion->adicionarNuevo();
+            break;
+        case 2:
+            gestion->listar();
+            _getch(); // Pausa para ver la lista
+            break;
+        case 3:
+            gestion->buscarReg();
+            _getch();
+            break;
+        case 4:
+            gestion->eliminarReg();
+            _getch();
+            break;
+        case 5:
+            gestion->modificarReg();
+            _getch();
+            break;
+        }
+
+    } while (opcion != 0);
+
+    delete gestion; // Liberamos la memoria antes de salir
+    return 0;
+}
